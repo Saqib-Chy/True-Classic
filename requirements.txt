@@ -1,0 +1,12 @@
+# Modules 1-4 dependencies.
+streamlit>=1.33
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3   # Module 2: GradientBoostingRegressor + quantile bands
+
+# Module 4 — LLM explanation. OPTIONAL: the app runs and explains without it
+# (deterministic rule-based fallback). Install + set OPENAI_API_KEY (or
+# ANTHROPIC_API_KEY) to enable the live, grounded LLM narration + Q&A.
+openai>=1.0         # optional; lazy-imported, only used when a key is present
+python-dotenv>=1.0  # loads OPENAI_API_KEY from a local .env (never committed)
+# anthropic>=0.39   # optional alternative provider
