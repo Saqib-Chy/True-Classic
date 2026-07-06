@@ -170,8 +170,8 @@ def rule_based(rec: dict) -> str:
 # ---------------------------------------------------------------------------
 _CONSTRAINT_ICON = {
     "satisfied": "✓",
-    "binding": "⛔ binding",
-    "triggered": "● triggered",
+    "binding": "• binding",
+    "triggered": "• triggered",
 }
 
 

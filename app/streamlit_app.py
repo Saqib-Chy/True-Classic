@@ -244,7 +244,7 @@ with st.sidebar:
     st.caption("Paid Media Intelligence & Optimization")
     if "cache_key" not in st.session_state:
         st.session_state.cache_key = 0
-    if st.button("🔄 Regenerate mock data (new scenario)", width="stretch"):
+    if st.button("Regenerate mock data (new scenario)", width="stretch"):
         seed = ingestion.regenerate(base_jitter=0.30)
         st.session_state.cache_key += 1
         st.session_state.last_seed = seed
@@ -255,7 +255,7 @@ with st.sidebar:
     st.divider()
     # Shared optimizer constraints — drive BOTH the Allocation and Approval tabs
     # so the recommendation a marketer approves is the one they were shown.
-    st.subheader("⚙️ Optimizer constraints")
+    st.subheader("Optimizer constraints")
     st.caption("Live guardrails — the recommendation recomputes as you move these.")
     roas_floor = st.slider("ROAS floor", 2.0, 8.0, 4.0, 0.5)
     max_change = st.slider("Max daily change %", 5, 50, 20, 5) / 100.0
@@ -357,13 +357,13 @@ with tab_ingest:
     st.markdown(
         """
         <div class="tc-flow">
-          <div class="tc-step">📥 Raw Exports<span class="sub">Meta + Google CSV</span></div>
+          <div class="tc-step">Raw Exports<span class="sub">Meta + Google CSV</span></div>
           <div class="tc-arrow">→</div>
-          <div class="tc-step">🧹 Normalize<span class="sub">One canonical schema</span></div>
+          <div class="tc-step">Normalize<span class="sub">One canonical schema</span></div>
           <div class="tc-arrow">→</div>
-          <div class="tc-step">🔗 Reconcile<span class="sub">SKU crosswalk</span></div>
+          <div class="tc-step">Reconcile<span class="sub">SKU crosswalk</span></div>
           <div class="tc-arrow">→</div>
-          <div class="tc-step">✅ Canonical DF<span class="sub">Unified fact table</span></div>
+          <div class="tc-step">Canonical DF<span class="sub">Unified fact table</span></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -410,7 +410,7 @@ with tab_ingest:
             )
 
     if unmatched_ids > 0:
-        with st.expander("🔎 Inspect flagged keys"):
+        with st.expander("Inspect flagged keys"):
             st.dataframe(recon["unmatched_keys"], width="stretch", hide_index=True)
             st.caption(
                 "Production behavior: route to a human review queue or attempt a "
@@ -509,10 +509,10 @@ with tab_overview:
         if rec["status"] == "reallocate":
             st.markdown(
                 f"<div class='tc-flow'>"
-                f"<div class='tc-step'>📉 {rec['donor']}"
+                f"<div class='tc-step'>{rec['donor']}"
                 f"<span class='sub'>marginal {rec['donor_marginal_roas']:.2f}x</span></div>"
                 f"<div class='tc-arrow'>${rec['budget_shift']:,.0f}/day →</div>"
-                f"<div class='tc-step'>📈 {rec['recipient']}"
+                f"<div class='tc-step'>{rec['recipient']}"
                 f"<span class='sub'>marginal {rec['recipient_marginal_roas']:.2f}x</span></div>"
                 f"</div>",
                 unsafe_allow_html=True,
@@ -543,13 +543,13 @@ with tab_overview:
     st.markdown(
         """
         <div class="tc-flow">
-          <div class="tc-step">📥 Ingest ✅<span class="sub">Meta + Google unified</span></div>
+          <div class="tc-step">Ingest ✅<span class="sub">Meta + Google unified</span></div>
           <div class="tc-arrow">→</div>
-          <div class="tc-step">🔮 Forecast ✅<span class="sub">7-day revenue & ROAS</span></div>
+          <div class="tc-step">Forecast ✅<span class="sub">7-day revenue & ROAS</span></div>
           <div class="tc-arrow">→</div>
-          <div class="tc-step">⚖️ Optimize ✅<span class="sub">marginal-ROAS reallocation</span></div>
+          <div class="tc-step">Optimize ✅<span class="sub">marginal-ROAS reallocation</span></div>
           <div class="tc-arrow">→</div>
-          <div class="tc-step">✅ Approve ✅<span class="sub">human-in-the-loop</span></div>
+          <div class="tc-step">Approve ✅<span class="sub">human-in-the-loop</span></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -837,10 +837,10 @@ with tab_alloc:
         # ===== Decision banner =====
         st.markdown(
             f"<div class='tc-flow'>"
-            f"<div class='tc-step'>📉 {rec['donor']}"
+            f"<div class='tc-step'>{rec['donor']}"
             f"<span class='sub'>marginal {rec['donor_marginal_roas']:.2f}x · below floor</span></div>"
             f"<div class='tc-arrow'>${rec['budget_shift']:,.0f}/day →</div>"
-            f"<div class='tc-step'>📈 {rec['recipient']}"
+            f"<div class='tc-step'>{rec['recipient']}"
             f"<span class='sub'>marginal {rec['recipient_marginal_roas']:.2f}x · headroom</span></div>"
             f"</div>",
             unsafe_allow_html=True,
@@ -924,7 +924,7 @@ with tab_alloc:
 
         # ===== Constraints triggered =====
         st.markdown("##### Constraints triggered")
-        icon = {"satisfied": "✅", "binding": "🔒", "triggered": "🎯"}
+        icon = {"satisfied": "✓", "binding": "•", "triggered": "•"}
         ccols = st.columns(len(rec["triggered_constraints"]))
         for col, ct in zip(ccols, rec["triggered_constraints"]):
             with col:
@@ -952,7 +952,7 @@ with tab_alloc:
                 f"- **Total spend:** ${rec['total_spend']:,.0f}/day (unchanged — budget neutral)"
             )
         st.caption(rec["reason"])
-        st.info("➡️ Take this recommendation to the **Approval** tab to review, adjust, and execute.")
+        st.info("Take this recommendation to the **Approval** tab to review, adjust, and execute.")
 
         # ===== Structured recommendation object (feeds Module 4) =====
         with st.expander("Recommendation object (Module 4 input)"):
@@ -986,7 +986,7 @@ def _render_audit_log() -> None:
     st.dataframe(view, width="stretch", hide_index=True)
     lc1, lc2 = st.columns([1, 4])
     with lc1:
-        if st.button("🗑️ Clear log"):
+        if st.button("Clear log"):
             audit_log.clear_log()
             st.rerun()
     with lc2:
@@ -1047,7 +1047,7 @@ with tab_approve:
         st.markdown("##### 2 · Why the optimizer recommends this")
         exp_col, ctrl_col = st.columns([3, 1])
         with ctrl_col:
-            regen = st.button("✨ Regenerate", width="stretch")
+            regen = st.button("Regenerate", width="stretch")
         exp_key = (rec["donor"], rec["recipient"], round(optimizer_shift, 2),
                    roas_floor, max_change, conf_thr)
         if regen or st.session_state.get("exp_key") != exp_key:
@@ -1066,9 +1066,9 @@ with tab_approve:
                     st.markdown(f"**{sec['title']}**")
                     st.markdown(sec["body"])
                 if explanation["source"] == "llm":
-                    with st.expander(f"🟢 AI narrative ({explanation['model']})"):
+                    with st.expander(f"AI narrative ({explanation['model']})"):
                         st.write(explanation["text"])
-        with st.expander("💬 Ask a question about this recommendation (grounded Q&A)", expanded=True):
+        with st.expander("Ask a question about this recommendation (grounded Q&A)", expanded=True):
             llm_on = explain.llm_available()
             if llm_on:
                 st.caption(
@@ -1108,13 +1108,13 @@ with tab_approve:
             qa = st.session_state.get("qa")
             if qa:
                 with st.container(border=True):
-                    st.markdown(f"🧑 **You:** {qa['q']}")
+                    st.markdown(f"**You:** {qa['q']}")
                 a = qa["a"]
-                badge = (f"🟢 OpenAI · {a['model']}" if a["source"] == "llm"
-                         else "🟠 Grounded fallback")
+                badge = (f"OpenAI · {a['model']}" if a["source"] == "llm"
+                         else "Grounded fallback")
                 with st.container(border=True):
                     st.markdown(
-                        f"🤖 **Assistant**&nbsp;&nbsp;"
+                        f"**Assistant**&nbsp;&nbsp;"
                         f"<span style='opacity:0.55;font-size:0.8rem'>{badge}</span>",
                         unsafe_allow_html=True,
                     )
@@ -1127,7 +1127,7 @@ with tab_approve:
             st.markdown("##### 3 · Review & decide")
 
             modify = st.toggle(
-                "✏️ Modify budget (keep the same donor → recipient, change the amount)",
+                "Modify budget (keep the same donor → recipient, change the amount)",
                 value=False,
             )
             if modify:
@@ -1173,9 +1173,9 @@ with tab_approve:
                     st.caption("⚠️ A comment is required before you can approve or reject.")
                 b1, b2, _ = st.columns([1.2, 1, 2])
                 approve_clicked = b1.button(
-                    "✅ Approve", type="primary", width="stretch", disabled=not comment_ok)
+                    "Approve", type="primary", width="stretch", disabled=not comment_ok)
                 reject_clicked = b2.button(
-                    "🚫 Reject", width="stretch", disabled=not comment_ok)
+                    "Reject", width="stretch", disabled=not comment_ok)
 
             if approve_clicked or reject_clicked:
                 action = ("rejected" if reject_clicked
@@ -1234,7 +1234,7 @@ with tab_approve:
             else:
                 st.caption("No budget change was submitted.")
 
-            if st.button("🔄 Start a new review"):
+            if st.button("Start a new review"):
                 st.session_state.pop("decision", None)
                 st.rerun()
 
